@@ -1,5 +1,14 @@
 #define PLAYER 1
 #define ENEMY 2
+#define PI 3.14159265359
+#define BLUE_LARGE 0
+#define BLUE_MEDIUM 2
+#define BLUE_SMALL 4
+
+#define RED_LARGE 1
+#define RED_MEDIUM 3
+#define RED_SMALL 5
+
 
 float myState[12];
 float myPos[3];
@@ -8,11 +17,6 @@ float myVelocity[3];
 float enemyPos[3];
 float enemyState[12];
 float enemyVelocity[3];
-
-typedef struct _coord {
-    int x;
-    int y;
-} Coord; 
 
 typedef enum state {
     PLACING_SPS,
@@ -28,31 +32,31 @@ typedef struct sphere {
     float vel[3];
 } Sphere;
 
-Coord items[6];
-Sphere *player; 
-Sphere *enemy;
+Sphere player; 
+Sphere enemy;
 
 void init() {
-    Coord items[0] = 
+    
 }
 
 void loop() {
-    move(target);
+    //move(target);
 }
 
 float angleBetween(float vec1[3], float vec2[3]) {
     int mag1 = mathVecMagnitude(vec1, 3);
     int mag2 = mathVecMagnitude(vec2, 3);
-    acosf(mathVecInner(vec1, vec2)/(mag1 * mag2));
+    float angle = acosf(mathVecInner(vec1, vec2, 3)/(mag1 * mag2));
+    return angle;
 }
 
 void updateInfo() {
-    getMyZRState(player->ZRState);
-    getOtherZRState(enemy->ZRState);
+    api.getMyZRState(player.ZRState);
+    api.getOtherZRState(enemy.ZRState);
     for (int i = 0; i < 3; i++) {
-        player->pos[i] = player->ZRState[i];
-        enemy->pos[i] = enemy->ZRState[i];
-        player->vel[i] = player->ZRState[i+3];
-        enemy->vel[i] = enemy->ZRState[i+3];
+        player.pos[i] = player.ZRState[i];
+        enemy.pos[i] = enemy.ZRState[i];
+        player.vel[i] = player.ZRState[i+3];
+        enemy.vel[i] = enemy.ZRState[i+3];
     }
 }
